@@ -28,39 +28,38 @@ def read_rfid():
             if id:
                 uid_str = ''.join(f'user-{str(uuid.uuid4())[:5]}')
 
-                # Send UID to Firestore
-                doc_ref = db.collection(u'rfid_scans').document()
-                doc_ref.set({u'uid': uid_str})
+                add_data = {
+                    'id': uid_str,
+                    'imageUrl': 'm',
+                    'points': 100,
+                    'public': True,
+                    'rfidtag': '789c',
+                    'username': 'ricci'
+                }
 
-                print("UID scanned and sent to Firestore: {}".format(uid_str))
+                update_data = {'rfidtag': 'mnl9132'}
+
+                doc_num = 1833901
+
+                add(add_data)
+                update(doc_num, update_data)
 
     except KeyboardInterrupt:
         GPIO.cleanup()
 
 
-def add():
+def add(data):
     # Convert UID to string
     doc_num = random.randrange(1000000,9999999)
-    uid_str = ''.join(f'user-{str(uuid.uuid4())[:5]}')
-    data = {
-        'id': uid_str,
-        'imageUrl': 'm',
-        'points': 100,
-        'public': True,
-        'rfidtag': '789c',
-        'username': 'ricci'
-    }
+    
+    
     # Send UID to Firestore
     doc_ref = db.collection('Users').document(f'{doc_num}')
     doc_ref.set(data)
 
-def update(doc_num):
+def update(doc_num, update_data):
     user_doc =  db.collection("Users").document(f'{doc_num}')
-    update_data = {'rfidtag': 'mnl9132'}
     user_doc.update(update_data)
 
 update(1833901)
-
-
-
 # add()
