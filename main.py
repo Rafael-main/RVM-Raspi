@@ -33,6 +33,7 @@ def read_rfid():
                     'imageUrl': 'm',
                     'points': 100,
                     'public': True,
+                    'rank': '0',
                     'rfidtag': '789c',
                     'username': 'ricci'
                 }
